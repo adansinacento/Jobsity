@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jobsity", "Jobsity\Jobsity.csproj", "{E8E1CF33-FAA5-4B26-B9FB-7AE0B1933213}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jobsity.Tests", "Jobsity.Tests\Jobsity.Tests.csproj", "{ADFD4EEB-EDC1-4372-8BFD-9B15FDAAC852}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E8E1CF33-FAA5-4B26-B9FB-7AE0B1933213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8E1CF33-FAA5-4B26-B9FB-7AE0B1933213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8E1CF33-FAA5-4B26-B9FB-7AE0B1933213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8E1CF33-FAA5-4B26-B9FB-7AE0B1933213}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADFD4EEB-EDC1-4372-8BFD-9B15FDAAC852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADFD4EEB-EDC1-4372-8BFD-9B15FDAAC852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADFD4EEB-EDC1-4372-8BFD-9B15FDAAC852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADFD4EEB-EDC1-4372-8BFD-9B15FDAAC852}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {550CC355-3587-46AB-BA45-C43C6E1715D4}
+	EndGlobalSection
+EndGlobal
