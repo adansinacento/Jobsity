@@ -1,4 +1,5 @@
 ﻿using Jobsity.Models;
+using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Jobsity.Controllers
         private jobsityEntities db = new jobsityEntities();
 
         [HttpPost]
-        public ActionResult NewMessage(string msg)
+        public void NewMessage(string msg)
         {
             //verify sender user
             var senderName = Session["user"].ToString();
@@ -21,7 +22,7 @@ namespace Jobsity.Controllers
             //if it comes to this point means user session expired or something
             if (sender == null)
             {
-                return RedirectToAction("Login", "Users");
+                return;
             }
 
             //create msg obj
@@ -35,7 +36,12 @@ namespace Jobsity.Controllers
             db.Messages.Add(newMessage);
             db.SaveChanges();
 
-            return PartialView("~/Views/Shared/_MessagePartial.cshtml", newMessage);
+            //get the view containing the msg
+            var view = PartialView("~/Views/Shared/_MessagePartial.cshtml", newMessage);
+
+            //send to all clients
+            var context = GlobalHost.ConnectionManager.GetHubContext<chatHub>();
+            context.Clients.All.message(senderName, msg, newMessage.TimeSent.ToString("d/MMM HH:mm:ss"));
         }
 
         public ActionResult Room()

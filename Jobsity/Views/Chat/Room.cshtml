@@ -16,7 +16,7 @@
 
 <footer class="msg-input">
     <div class="row" style="margin-right: 0;">
-        @using (Ajax.BeginForm("NewMessage", "Chat", new AjaxOptions { HttpMethod = "POST", OnSuccess = "SendMessageSuccess" }))
+        @using (Ajax.BeginForm("NewMessage", "Chat", new AjaxOptions { HttpMethod = "POST" }))
         {
             <div class="col-xs-10">
                 <input class="form-control input-lg" name="msg" id="msg-input" placeholder="Write message here" required />
