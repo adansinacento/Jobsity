@@ -1,27 +1,29 @@
-﻿@{
+﻿@model IEnumerable<Jobsity.Models.Message>
+@{
     ViewBag.Title = "Chat room";
     var userName = Session["user"];
 }
 <div class="container body-content">
-    @for (int i = 0; i < 15; i++)
-    {
-        <h2>Welcome @userName @i</h2>
-        @render
-    }
-    @using (Jobsity.Models.jobsityEntities db = new Jobsity.Models.jobsityEntities())
-    {
-        foreach (var msg in db.Messages)
-    }
+    <div id="msg-list">
+        @foreach (var msg in Model)
+        {
+            @Html.Partial("~/Views/Shared/_MessagePartial.cshtml", msg);
+        }
+    </div>
 </div>
+
 
 
 <footer class="msg-input">
     <div class="row" style="margin-right: 0;">
-        <div class="col-xs-10">
-            <input class="form-control input-lg" placeholder="Write message here" />
-        </div>
-        <div class="col-xs-2">
-            <button class="btn btn-default btn-lg" style="width: 100%">Send</button>
-        </div>
+        @using (Ajax.BeginForm("NewMessage", "Chat", new AjaxOptions { HttpMethod = "POST", OnSuccess = "SendMessageSuccess" }))
+        {
+            <div class="col-xs-10">
+                <input class="form-control input-lg" name="msg" id="msg-input" placeholder="Write message here" required />
+            </div>
+            <div class="col-xs-2">
+                <button class="btn btn-default btn-lg" type="submit" style="width: 100%">Send</button>
+            </div>
+        }
     </div>
 </footer>

@@ -1,10 +1,11 @@
 ﻿@model Jobsity.Models.Message
 
 <div>
+    <hr />
     <h4>@Model.User.Username</h4>
     <p>
         @Model.Message1
         <br />
-        <small class="text-muted">@Model.TimeSent.ToString("")</small>
+        <small class="text-muted">@Model.TimeSent.ToString("d/MMM HH:mm:ss")</small>
     </p>
 </div>
