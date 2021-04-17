@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("Login", "Users", FormMethod.Post, new { id = "login-form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <div class="col-md-offset-2 col-md-10 form-group">
+            <label>Username</label>
+            <input name="UserName" class="form-control" placeholder="User name" />
+        </div>
+        <div class="col-md-offset-2 col-md-10 form-group">
+            <label>Password</label>
+            <input name="Password" class="form-control" placeholder="Password" type="password" />
+        </div>
+        <div class="col-md-12">
+            <button type="submit" value="Login" form="login-form" class="btn btn-primary">Login</button>
+        </div>
+        <div class="col-md-12">
+            @Html.ActionLink("Register instead", "Register")
+        </div>
+    </div>
+}

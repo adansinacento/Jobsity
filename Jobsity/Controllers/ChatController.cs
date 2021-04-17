@@ -8,9 +8,14 @@ namespace Jobsity.Controllers
 {
     public class ChatController : Controller
     {
-        // GET: Chat
-        public ActionResult Index()
+        
+        public ActionResult Room()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
+
             return View();
         }
     }

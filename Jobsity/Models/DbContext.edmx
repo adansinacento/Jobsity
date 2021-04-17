@@ -20,7 +20,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="16" Nullable="false" />
-          <Property Name="PassHash" Type="varchar" MaxLength="51" Nullable="false" />
+          <Property Name="PassHash" Type="varchar(max)" Nullable="false" />
           <Property Name="RegistrationTime" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_Messages_Messages">
@@ -53,7 +53,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PassHash" Type="String" MaxLength="51" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PassHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RegistrationTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Messages" Relationship="jobsityModel.FK_Messages_Messages" FromRole="User" ToRole="Message" />
         </EntityType>

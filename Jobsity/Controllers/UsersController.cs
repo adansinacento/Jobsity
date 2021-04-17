@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Jobsity.Models;
+using BC = BCrypt.Net;
 
 namespace Jobsity.Controllers
 {
@@ -14,106 +15,78 @@ namespace Jobsity.Controllers
     {
         private jobsityEntities db = new jobsityEntities();
 
-        // GET: Users
-        public ActionResult Index()
+        public ActionResult Login()
         {
-            return View(db.Users.ToList());
+            return View();
+        }
+        
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("Login");
         }
 
-        // GET: Users/Details/5
-        public ActionResult Details(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(string UserName, string Password)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
+            var user = db.Users.Where(u => u.Username == UserName).FirstOrDefault();
+
             if (user == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Login");
             }
-            return View(user);
+
+            if (BC.BCrypt.Verify(Password, user.PassHash))
+            {
+                Session["user"] = UserName;
+                return RedirectToAction("Room", "Chat");
+            }
+
+            
+            return RedirectToAction("Login");
         }
 
-        // GET: Users/Create
-        public ActionResult Create()
+        public ActionResult Register()
         {
             return View();
         }
 
-        // POST: Users/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Username,PassHash")] User user)
+        public ActionResult Register(string UserName, string PassHash)
         {
-            if (ModelState.IsValid)
+            //first check username is not taken
+            if (db.Users.Any(u => u.Username == UserName))
             {
-                user.RegistrationTime = DateTime.Now;
-                db.Users.Add(user);
+                return RedirectToAction("Register");
+            }
+
+            //if username is available register the new user
+
+            //actually password is not hashed here so lets hash it
+            var salt = BC.BCrypt.GenerateSalt();
+            var hash = BC.BCrypt.HashPassword(PassHash, salt);
+
+            var newUser = new User()
+            {
+                Username = UserName, 
+                PassHash = hash, 
+                RegistrationTime = DateTime.Now
+            };
+
+            try
+            {
+                db.Users.Add(newUser);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+
             }
 
-            return View(user);
-        }
-
-        // GET: Users/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
-        // POST: Users/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Username,PassHash,RegistrationTime")] User user)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);
-        }
-
-        // GET: Users/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            //User is created now lets log them in
+            return null;
         }
 
         protected override void Dispose(bool disposing)
