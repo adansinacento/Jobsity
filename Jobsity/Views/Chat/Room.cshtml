@@ -1,7 +1,27 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Chat room";
+    var userName = Session["user"];
 }
+<div class="container body-content">
+    @for (int i = 0; i < 15; i++)
+    {
+        <h2>Welcome @userName @i</h2>
+        @render
+    }
+    @using (Jobsity.Models.jobsityEntities db = new Jobsity.Models.jobsityEntities())
+    {
+        foreach (var msg in db.Messages)
+    }
+</div>
 
-<h2>Room</h2>
 
+<footer class="msg-input">
+    <div class="row" style="margin-right: 0;">
+        <div class="col-xs-10">
+            <input class="form-control input-lg" placeholder="Write message here" />
+        </div>
+        <div class="col-xs-2">
+            <button class="btn btn-default btn-lg" style="width: 100%">Send</button>
+        </div>
+    </div>
+</footer>

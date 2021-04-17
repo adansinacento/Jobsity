@@ -24,9 +24,14 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Adan Sandoval</p>
-        </footer>
+        <div class="row" style="margin-top: 50px">
+            <div class="col-md-offset-1 col-md-10 ">
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - Adan Sandoval</p>
+                </footer>
+            </div>
+        </div>
+        
     </div>
 
     @Scripts.Render("~/bundles/jquery")
