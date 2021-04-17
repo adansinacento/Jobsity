@@ -86,7 +86,7 @@ namespace Jobsity.Controllers
             }
 
             //User is created now lets log them in
-            return null;
+            return Login(UserName, PassHash);
         }
 
         protected override void Dispose(bool disposing)
