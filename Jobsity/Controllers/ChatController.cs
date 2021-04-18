@@ -35,10 +35,6 @@ namespace Jobsity.Controllers
                 TimeSent = DateTime.Now
             };
 
-            //add to db
-            db.Messages.Add(newMessage);
-            db.SaveChanges();
-
             //send to all clients
             var context = GlobalHost.ConnectionManager.GetHubContext<chatHub>();
             context.Clients.All.message(senderName, msg, newMessage.TimeSent.ToString("d/MMM HH:mm:ss"));
@@ -64,6 +60,12 @@ namespace Jobsity.Controllers
 
                 //send message to clients
                 context.Clients.All.message(header, stockVal.Content, footer);
+            }
+            else
+            {
+                //add to db (only if i was not a command for the bot)
+                db.Messages.Add(newMessage);
+                db.SaveChanges();
             }
         }
 

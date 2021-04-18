@@ -2,8 +2,8 @@
 Code challenge for the jobsity application
 
 ## Necessary preparations
-* Create the database according to the schema defined in the file `jobsiti.sql`
-* Modify the `web.config` file, specificaly modify the `<connectionStrings>` according to the database created in the point 1 of this list
+* Create the database according to the schema defined in the file `jobsity.sql`
+* Modify the `web.config` file, specificaly the `<connectionStrings>`. Add the proper connection string according to the database created in the point 1 of this list and the credentials used for sql server
 * Once installed register the necessary users
 
 ## How to use
