@@ -8,10 +8,6 @@ namespace Jobsity
 {
     public class chatHub : Hub
     {
-        public void SendToClients(string elem)
-        {
-            //elem its actually the element to append
-            Clients.All.message(elem);
-        }
+        
     }
 }
